@@ -1,3 +1,3 @@
-module github.com/start-go/server
+module p1/server
 
 go 1.19
