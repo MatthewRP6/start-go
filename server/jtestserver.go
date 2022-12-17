@@ -16,21 +16,20 @@ type SendBack struct {
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
-	TEST := []byte("OK\n")
-	w.Write(TEST)
+	w.WriteHeader(http.StatusOK)
 	HC++
 }
 
 func metricHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("called metric")
-	res, err := json.Marshal(SendBack{Status: "OK", Value: 0})
+	fmt.Printf("called metric\n")
+	res, err := json.Marshal(SendBack{Status: "OK", Value: 0}) //Returns JSON encoding of V
 	if err != nil {
 		fmt.Println("error")
 
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(res)
+	json.NewEncoder(w).Encode(res)                     //moved up from line 34 . Creates an encoder writing to w + writes to W
+	w.Header().Set("Content-Type", "application/json") //Adds  header + description to HeaderMap
+	w.WriteHeader(http.StatusOK)                       //Sends http response header with (response code) http.StatusOK = constant int
 
 }
 
